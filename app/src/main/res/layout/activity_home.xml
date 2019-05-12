@@ -7,74 +7,74 @@
     tools:context=".MainActivity"
     android:orientation="horizontal"
     android:id="@+id/main_layout"
-    android:background="@color/main_background">
+    android:background="@drawable/layout_half_circle">
 
     <Space
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="8"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/topLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="30dp"
+            android:layout_alignParentTop="true">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SAVE KIDS"
-                android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:textSize="40dp"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/basic"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="prevent your kids from drowning"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/light_gray"
-                android:textSize="15dp"
+                android:textSize="20dp"
                 android:fontFamily="@font/basic"/>
 
         </LinearLayout>
 
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
 
         <ImageView
             android:id="@+id/main_take_picture_btn"
-            android:layout_width="match_parent"
+            android:layout_width="40mm"
             android:layout_height="40mm"
-            android:src="@drawable/camera_icon"
-            android:scaleType="centerInside"
+            android:layout_alignBottom="@+id/topLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="-300dp"
+            android:background="@drawable/full_circle"
             android:padding="15mm"
-            android:background="@color/light_gray"
-            android:layout_gravity="center_horizontal"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/camera_icon" />
 
         <FrameLayout
             android:id="@+id/information_frame"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            >
 
         </FrameLayout>
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <Space
