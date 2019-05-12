@@ -1,99 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@null"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_height="130dp"
+        android:layout_width="100dp"
+        android:layout_gravity="center_vertical|end">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/actionButton"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/indigo"
+            android:src="@drawable/alert_icon"
+            app:backgroundTint="@color/white"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:borderWidth = "2dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/connectBluetoothButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal|top"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/bluetooth_connect"
+            android:layout_marginRight="5dp"
+            android:scaleType="centerCrop"
+            app:fabSize="mini"
+            android:visibility="invisible"
+            app:backgroundTint="@color/indigo"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:borderWidth = "2dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/alertButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="top|end"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/caution_level_0"
+            android:layout_marginRight="5dp"
+            android:scaleType="centerCrop"
+            app:fabSize="mini"
+            android:visibility="invisible"
+            app:backgroundTint="@color/indigo"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:borderWidth = "2dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/noticeLifeGuard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|end"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/alarm_icon"
+            android:visibility="invisible"
+            app:backgroundTint="@color/indigo"
+            app:elevation="6dp"
+            app:fabSize="mini"
+            android:layout_marginRight="5dp"
+            app:pressedTranslationZ="12dp"
+            app:borderWidth = "2dp"/>
+
+
+    </FrameLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
+        android:background="@null">
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:text="NAME"
-            android:fontFamily="@font/basic"
-            android:gravity="center_vertical"/>
+            android:layout_weight="9"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/displayChildName"
-            android:layout_width="0dp"
-            android:layout_weight="7"
-            android:layout_height="match_parent"
-            android:inputType= "textPersonName"
-            android:gravity="center_vertical"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/basic"
+                    android:gravity="center_vertical"
+                    android:text="NAME"
+                    android:textColor="@color/indigo"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/displayChildName"
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:textSize="15dp"
+                    android:textColor="@color/indigo"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/basic"
+                    android:gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:text="AGE"
+                    android:textSize="15dp"
+                    android:textColor="@color/indigo"
+                    android:fontFamily="@font/basic"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/displayChildAge"
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:textSize="15dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/indigo"
+                    android:textColorHint="@color/light_gray"
+                    android:fontFamily="@font/basic"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:textSize="15dp"
+                    android:layout_height="match_parent"
+                    android:text="WEIGHT"
+                    android:textColor="@color/indigo"
+                    android:fontFamily="@font/basic"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/displayChildWeight"
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:textSize="15dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/indigo"
+                    android:fontFamily="@font/basic"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+</FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:text="AGE"
-            android:fontFamily="@font/basic"
-            android:gravity="center_vertical"/>
 
-        <TextView
-            android:id="@+id/displayChildAge"
-            android:layout_width="0dp"
-            android:layout_weight="7"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:gravity="center_vertical"/>
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:text="WEIGHT"
-            android:fontFamily="@font/basic"
-            android:gravity="center_vertical"/>
-
-        <TextView
-            android:id="@+id/displayChildWeight"
-            android:layout_width="0dp"
-            android:layout_weight="7"
-            android:layout_height="match_parent"
-            android:inputType="numberDecimal"
-            android:gravity="center_vertical"/>
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"/>
-
-</LinearLayout>
