@@ -44,7 +44,7 @@ public class Permission {
             if(cameraPermission == PackageManager.PERMISSION_GRANTED){
                 return true;
             }else{
-                Snackbar.make(mView, "이 앱을 실행하려면 카메라 권한이 필요합니다.",
+                Snackbar.make(fView, "이 앱을 실행하려면 카메라 권한이 필요합니다.",
                         Snackbar.LENGTH_INDEFINITE).setAction("확인", new View.OnClickListener() {
 
                     @Override
@@ -63,7 +63,7 @@ public class Permission {
         if(ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }else{
-            Snackbar.make(mView, "이 앱을 실행하려면 외부 저장소 접근 권한이 필요합니다.",
+            Snackbar.make(fView, "이 앱을 실행하려면 외부 저장소 접근 권한이 필요합니다.",
                     Snackbar.LENGTH_INDEFINITE).setAction("확인", new View.OnClickListener() {
 
                 @Override
@@ -80,7 +80,7 @@ public class Permission {
         if(ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }else{
-            Snackbar.make(mView, "이 앱을 실행하려면 외부 저장소 접근 권한이 필요합니다.",
+            Snackbar.make(fView, "이 앱을 실행하려면 외부 저장소 접근 권한이 필요합니다.",
                     Snackbar.LENGTH_INDEFINITE).setAction("확인", new View.OnClickListener() {
 
                 @Override

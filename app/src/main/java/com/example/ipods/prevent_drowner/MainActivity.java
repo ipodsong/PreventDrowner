@@ -1,5 +1,7 @@
 package com.example.ipods.prevent_drowner;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +37,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,7 +61,7 @@ import static com.example.ipods.prevent_drowner.Common.homeFragmentIndex;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private final String TAG = "MainActivity";
 
-    private LinearLayout mainLayout;
+    private FrameLayout mainLayout;
 
     ImageButton mAlertButton;
     boolean isWarning = false;
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initializeReceiver();
 
         common = new Common();
-        mainLayout = (LinearLayout)findViewById(R.id.main_layout);
+        mainLayout = (FrameLayout) findViewById(R.id.fragment_container);
 
         /*** request permission ***/
         checkPermission();
@@ -159,6 +162,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             switch(action){
                 case TO_HOME_FRAG:
+
+
                     loadFragment(new Home());
                     break;
                 case TO_CAMERA_FRAG:
@@ -281,8 +286,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        //DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        //drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

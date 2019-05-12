@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -41,6 +42,13 @@ public class Home extends Fragment implements View.OnClickListener{
 
     private Common common;
 
+    /*** information layout ***/
+    private FrameLayout informationLayout;
+
+    /*** information ***/
+    public ChildInformation childInformation;
+
+
     /*** database ***/
     private SharedPreferences mPref;
     private SharedPreferences.Editor mPrefEditor;
@@ -58,8 +66,10 @@ public class Home extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         common = new Common();
+
         mPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         mPrefEditor = mPref.edit();
+
         ((MainActivity)getActivity()).currentFragment = homeFragmentIndex;
         return inflater.inflate(R.layout.activity_home, null);
     }
@@ -68,13 +78,17 @@ public class Home extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "view created");
 
         ((MainActivity)getActivity()).setNavigationVisibility(true);
 
         mainLayout = (LinearLayout)view.findViewById(R.id.main_layout);
+        informationLayout = (FrameLayout)view.findViewById(R.id.information_frame);
+
+        loadFragment(new Home_Information());
+
         childImage = (ImageView)view.findViewById(R.id.main_take_picture_btn);
         childImage.setOnClickListener(this);
+
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(TO_HOME_FRAG);
@@ -97,8 +111,6 @@ public class Home extends Fragment implements View.OnClickListener{
     public void onResume() {
         super.onResume();
     }
-
-
 
 
     @Override
@@ -129,4 +141,16 @@ public class Home extends Fragment implements View.OnClickListener{
             }
         }
     };
+
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.information_frame, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
 }
