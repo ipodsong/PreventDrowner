@@ -1,11 +1,17 @@
 package com.example.ipods.prevent_drowner;
 
+import android.app.AlarmManager;
+import android.app.Application;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,6 +21,7 @@ import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -43,6 +50,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -58,7 +70,7 @@ import static com.example.ipods.prevent_drowner.Common.TO_CAMERA_FRAG;
 import static com.example.ipods.prevent_drowner.Common.TO_HOME_FRAG;
 import static com.example.ipods.prevent_drowner.Common.homeFragmentIndex;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = "MainActivity";
 
     private FrameLayout mainLayout;
@@ -87,10 +99,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /*** bottom navigation view ***/
     BottomNavigationView navView;
 
+    /*** service ***/
+    public Service bluetoothService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*** service ***/
+        startService(new Intent(getApplicationContext(), Bluetooth.class));
+        bindService(new Intent(this, Bluetooth.class),
+                mServiceConnection, // 서비스와 연결에 대한 정의
+                Context.BIND_AUTO_CREATE);
 
         loadFragment(new Home());
         initializeReceiver();
@@ -103,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
 
         /*** animation ***/
         alertAnimation = AnimationUtils.loadAnimation(this, R.anim.alert);
@@ -120,6 +142,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mp = MediaPlayer.create(MainActivity.this, R.raw.alert);
         mp.setVolume(1.0f, 1.0f);
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);}
+                });
+
+        //FireBaseMessagingService fireBaseMessagingService = new FireBaseMessagingService();
+        startService(new Intent(MainActivity.this, FirebaseMessagingService.class));
+
+    }
+
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName name,
+                                       IBinder service) {
+            Bluetooth.PreventDrowner binder = (Bluetooth.PreventDrowner) service;
+            bluetoothService = binder.getService();
+            ((Bluetooth) bluetoothService).initialize();
+
+            /*** register broadcast listeners ***/
+            initializeService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, "onServiceDisconnected");
+            //isService = false;
+            bluetoothService = null;
+        }
+    };
+
+    /*** service initialization ***/
+    private void initializeService() {
+        IntentFilter filter = new IntentFilter();
+        LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(mReceiver, filter);
     }
 
     @Override
@@ -153,6 +218,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(mReceiver, filter);
     }
+
+
 
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -189,6 +256,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
     }
+
+
 
     ImageButton.OnClickListener alertButtonListener = new View.OnClickListener() {
         @Override
@@ -246,6 +315,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mp.release();
         LocalBroadcastManager.getInstance(MainActivity.this).unregisterReceiver(mReceiver);
+
+        Intent restartService = new Intent(getApplicationContext(), FireBaseMessagingService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),1,restartService,PendingIntent.FLAG_ONE_SHOT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME,0,pendingIntent);
 
     }
 

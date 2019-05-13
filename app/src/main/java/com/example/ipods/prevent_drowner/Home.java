@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,9 +46,6 @@ public class Home extends Fragment implements View.OnClickListener{
     /*** information layout ***/
     private FrameLayout informationLayout;
 
-    /*** information ***/
-    public ChildInformation childInformation;
-
 
     /*** database ***/
     private SharedPreferences mPref;
@@ -59,7 +57,6 @@ public class Home extends Fragment implements View.OnClickListener{
     /*** ImageView ***/
     private Bitmap mImageBitmap;
     private ImageView childImage;
-
 
 
     @Nullable
@@ -103,6 +100,7 @@ public class Home extends Fragment implements View.OnClickListener{
             Glide.with(getContext()).load(mPref.getString("CAPTURED_IMG_URI", null))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
+                    .apply(RequestOptions.circleCropTransform())
                     .into(childImage);
         }
     }

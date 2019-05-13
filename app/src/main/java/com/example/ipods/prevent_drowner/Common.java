@@ -29,7 +29,7 @@ public class Common {
     public final static String CHILD_WEIGHT     = "CHILD_INFORMATION_WEIGHT";
 
     /*** Bluetooth ***/
-    public final static String BluetoothDeviceName = "";
+    public final static String BluetoothDeviceName = "AMMONATE_0000";
 
     public static final UUID RX_SERVICE_UUID = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
     public static final UUID RX_CHAR_UUID = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e");

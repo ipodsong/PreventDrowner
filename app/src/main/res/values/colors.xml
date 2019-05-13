@@ -6,6 +6,7 @@
 
     <color name="main_background">@color/white</color>
 
+    <color name ="indigo">#14143A</color>
     <color name="logo_text">#ef4b4f</color>
     <color name="light_gray">#949191</color>
     <color name="black">#000000</color>
